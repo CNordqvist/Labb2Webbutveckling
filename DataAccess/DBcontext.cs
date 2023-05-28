@@ -1,4 +1,5 @@
 ﻿using DataAccess.Model;
+using Labb2Webbutveckling.Shared.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace DataAccess
 {
     public class Context : DbContext
     {
+        public Context(DbContextOptions<Context> options) { }
         public DbSet<CustomerModel> Customers { get; set; }
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<OrderModel> Orders { get; set; }

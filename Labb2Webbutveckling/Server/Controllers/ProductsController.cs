@@ -17,34 +17,33 @@ namespace Labb2Webbutveckling.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
-            var products = _productRepository.GetAll();
+            var products = await _productRepository.GetAllAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProductById(int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
-            var product = _productRepository.GetById(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
                 return NotFound();
-            
+
             return Ok(product);
-            
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(ProductModel product)
+        public async Task<IActionResult> CreateProduct(ProductModel product)
         {
-            _productRepository.Add(product);
+            await _productRepository.AddAsync(product);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, ProductModel updatedProduct)
+        public async Task<IActionResult> UpdateProduct(int id, ProductModel updatedProduct)
         {
-            var product = _productRepository.GetById(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
                 return NotFound();
 
@@ -55,18 +54,18 @@ namespace Labb2Webbutveckling.Server.Controllers
             product.ProductName = updatedProduct.ProductName;
             product.ProductDescription = updatedProduct.ProductDescription;
 
-            _productRepository.Update(product);
+            await _productRepository.UpdateAsync(product);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = _productRepository.GetById(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
                 return NotFound();
 
-            _productRepository.Remove(product);
+            await _productRepository.RemoveAsync(product);
             return Ok();
         }
     }

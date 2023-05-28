@@ -16,16 +16,16 @@ namespace Labb2Webbutveckling.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
-            var customers = _customerRepository.GetAll();
+            var customers = await _customerRepository.GetAllAsync();
             return Ok(customers);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCustomerById(int id)
+        public async Task<IActionResult> GetCustomerById(int id)
         {
-            var customer = _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null)
                 return NotFound();
 
@@ -33,16 +33,16 @@ namespace Labb2Webbutveckling.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCustomer(CustomerModel customer)
+        public async Task<IActionResult> CreateCustomer(CustomerModel customer)
         {
-            _customerRepository.Add(customer);
+            await _customerRepository.AddAsync(customer);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCustomer(int id, CustomerModel updatedCustomer)
+        public async Task<IActionResult> UpdateCustomer(int id, CustomerModel updatedCustomer)
         {
-            var customer = _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null)
                 return NotFound();
 
@@ -52,7 +52,7 @@ namespace Labb2Webbutveckling.Server.Controllers
             customer.PhoneNumber = updatedCustomer.PhoneNumber;
             customer.Address = updatedCustomer.Address;
 
-            _customerRepository.Update(customer);
+            await _customerRepository.UpdateAsync(customer);
             return Ok();
         }
 

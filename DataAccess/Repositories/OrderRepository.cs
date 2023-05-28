@@ -1,4 +1,5 @@
 ﻿using DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +17,25 @@ namespace DataAccess.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(OrderModel order)
+        public async Task AddAsync(OrderModel order)
         {
             _dbContext.Orders.Add(order);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<OrderModel> GetAll()
+        public async Task<IEnumerable<OrderModel>> GetAllAsync()
         {
-            return _dbContext.Orders.ToList();
+            return await _dbContext.Orders.ToListAsync();
         }
 
-        public OrderModel GetById(int id)
+        public async Task<OrderModel> GetByIdAsync(int id)
         {
-            return _dbContext.Orders.FirstOrDefault(o => o.OrderID == id);
+            return await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderID == id);
         }
 
-        public IEnumerable<OrderModel> GetOrdersByCustomerId(int customerId)
+        public async Task<IEnumerable<OrderModel>> GetOrdersByCustomerIdAsync(int customerId)
         {
-            return _dbContext.Orders.Where(o => o.CustomerID == customerId).ToList();
+            return await _dbContext.Orders.Where(o => o.CustomerID == customerId).ToListAsync();
         }
 
     }

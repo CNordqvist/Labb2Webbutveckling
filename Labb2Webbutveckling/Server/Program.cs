@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.a
+builder.Services.AddScoped<DbContext>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -17,16 +17,16 @@ namespace Labb2Webbutveckling.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllOrders()
+        public async Task<IActionResult> GetAllOrders()
         {
-            var orders = _orderRepository.GetAll();
+            var orders = await _orderRepository.GetAllAsync();
             return Ok(orders);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetOrderById(int id)
+        public async Task<IActionResult> GetOrderById(int id)
         {
-            var order = _orderRepository.GetById(id);
+            var order = await _orderRepository.GetByIdAsync(id);
             if (order == null)
                 return NotFound();
 
@@ -34,9 +34,9 @@ namespace Labb2Webbutveckling.Server.Controllers
         }
 
         [HttpGet("customer/{customerId}")]
-        public IActionResult GetOrdersByCustomerId(int customerId)
+        public async Task<IActionResult> GetOrdersByCustomerId(int customerId)
         {
-            var orders = _orderRepository.GetOrdersByCustomerId(customerId);
+            var orders = await _orderRepository.GetOrdersByCustomerIdAsync(customerId);
             return Ok(orders);
         }
     }

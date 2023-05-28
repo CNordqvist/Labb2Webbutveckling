@@ -17,42 +17,42 @@ namespace DataAccess.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(ProductModel product)
+        public async Task AddAsync(ProductModel product)
         {
             _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Update(ProductModel product)
+        public async Task UpdateAsync(ProductModel product)
         {
             _dbContext.Products.Update(product);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Remove(ProductModel product)
+        public async Task RemoveAsync(ProductModel product)
         {
             _dbContext.Products.Remove(product);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<ProductModel> GetAll()
+        public async Task<IEnumerable<ProductModel>> GetAllAsync()
         {
-            return _dbContext.Products.ToList();
+            return await _dbContext.Products.ToListAsync();
         }
 
-        public ProductModel GetById(int id)
+        public async Task<ProductModel> GetByIdAsync(int id)
         {
-            return _dbContext.Products.FirstOrDefault(p => p.ProductID == id);
+            return await _dbContext.Products.FirstOrDefaultAsync(p => p.ProductID == id);
         }
 
-        public IEnumerable<ProductModel> SearchByNameOrNumber(string searchQuery)
+        public async Task<IEnumerable<ProductModel>> SearchByNameAsync(string searchQuery)
         {
-            return _dbContext.Products.Where(p => p.ProductName.Contains(searchQuery) || p.ProductNumber.Contains(searchQuery)).ToList();
+            return await _dbContext.Products.Where(p => p.ProductName.Contains(searchQuery)).ToListAsync();
         }
 
-        public IEnumerable<ProductModel> GetDiscontinuedProducts()
+        public async Task<IEnumerable<ProductModel>> GetDiscontinuedProductsAsync()
         {
-            return _dbContext.Products.Where(p => p.Status == false).ToList();
+            return await _dbContext.Products.Where(p => !p.Status).ToListAsync();
         }
     }
 }
